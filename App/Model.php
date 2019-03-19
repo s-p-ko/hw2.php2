@@ -24,13 +24,13 @@ abstract class Model
      * @return mixed
      * @throws Exceptions\DbException
      */
-    public static function findById($id)
+    public static function findById(int $id)
     {
         $db = new \App\Db();
-        $sql = 'SELECT * FROM ' . static::TABLE . ' WHERE id = :id LIMIT 1';
+        $sql = 'SELECT * FROM ' . static::TABLE . ' WHERE id = :id';
         $params = [':id' => $id];
         $res = $db->query($sql, $params, static::class);
-        return $res ? $res[0] : false;
+        return $res ? reset($res) : false;
     }
 
     /**
@@ -121,7 +121,7 @@ abstract class Model
     public function delete()
     {
         $db = new \App\Db();
-        $sql = 'DELETE FROM ' . static::TABLE . ' WHERE id = :id LIMIT 1';
+        $sql = 'DELETE FROM ' . static::TABLE . ' WHERE id = :id';
         $data = [':id' => $this->id];
         $db->execute($sql, $data);
     }
